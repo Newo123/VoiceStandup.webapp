@@ -1,10 +1,17 @@
-import react from '@vitejs/plugin-react';
-import fs from 'fs';
-import { defineConfig } from 'vite';
+import tailwindcss from '@tailwindcss/vite'
+import react from '@vitejs/plugin-react'
+import fs from 'fs'
+import path from 'path'
+import { defineConfig } from 'vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-    plugins: [react()],
+    plugins: [react(), tailwindcss()],
+    resolve: {
+        alias: {
+            '@': path.resolve(__dirname, './src'), // <-- настройка псевдонима
+        },
+    },
     server: {
         port: 8443,
         host: '0.0.0.0',
@@ -17,4 +24,4 @@ export default defineConfig({
             cert: fs.readFileSync('./.cert/localhost.pem'),
         },
     },
-});
+})

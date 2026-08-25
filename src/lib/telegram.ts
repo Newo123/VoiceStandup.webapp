@@ -3,6 +3,7 @@ declare global {
         Telegram?: {
             WebApp?: {
                 initData: string
+                setHeaderColor: (hex: string) => void
             }
         }
     }

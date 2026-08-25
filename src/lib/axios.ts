@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { getTelegramInitData } from './telegram/init-data'
+import { getTelegramInitData } from './telegram'
 
 export const api = axios.create({
     baseURL: import.meta.env.VITE_API_URL,
