@@ -7,7 +7,7 @@ import {
     UserDetailPage,
     UsersPage,
 } from '@/pages'
-import { MainLayout } from '@/shared'
+import { RootLayout } from '@/shared'
 import { Navigate, Route, Routes } from 'react-router'
 
 export function Router() {
@@ -17,7 +17,7 @@ export function Router() {
             <Route path="/" element={<Navigate to="/teams" replace />} />
 
             {/* Все маршруты с Layout */}
-            <Route element={<MainLayout />}>
+            <Route element={<RootLayout />}>
                 <Route path="teams">
                     <Route index element={<TeamsPage />} />
                     <Route path="new" element={<TeamFormPage />} />

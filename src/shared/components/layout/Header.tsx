@@ -30,7 +30,7 @@ export function Header() {
                     <h1 className="font-semibold truncate text-lg">{title}</h1>
                 </div>
                 <Link to="/profile" className="shrink-0">
-                    <Avatar className="w-[48px] h-[48px]">
+                    <Avatar className="w-10 h-10">
                         <AvatarImage src="https://github.com/shadcn.png" />
                         <AvatarFallback>CN</AvatarFallback>
                     </Avatar>
