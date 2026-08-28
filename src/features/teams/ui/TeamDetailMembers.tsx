@@ -20,7 +20,7 @@ export function TeamDetailMembers({ members }: IProps) {
                 {members.map((member) => (
                     // Нужно сделать ссылку на профиль если это текущий пользователь
                     <Link
-                        to={`/users/${member.id}`}
+                        to={`/user/${member.id}`}
                         key={member.id}
                         className="flex items-center justify-between py-2 border-b border-foreground/10"
                     >
