@@ -1,15 +1,6 @@
-import { HeaderProvider, QueryProvider } from './providers'
-import { TelegramProvider } from './providers/TelegramProvider'
-import { Router } from './router'
+import { RouterProvider } from 'react-router'
+import { router } from './router'
 
 export function App() {
-    return (
-        <TelegramProvider>
-            <QueryProvider>
-                <HeaderProvider>
-                    <Router />
-                </HeaderProvider>
-            </QueryProvider>
-        </TelegramProvider>
-    )
+    return <RouterProvider router={router} />
 }

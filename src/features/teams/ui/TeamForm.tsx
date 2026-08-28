@@ -6,7 +6,7 @@ import {
     FieldLabel,
     Input,
     Spinner,
-} from '@/shared'
+} from '@/widgets'
 import { useForm } from '@tanstack/react-form'
 import { useNavigate } from 'react-router'
 import { z } from 'zod'

@@ -10,7 +10,7 @@ import {
     CardFooter,
     CardHeader,
     CardTitle,
-} from '@/shared'
+} from '@/widgets'
 import { ChevronRight, Users } from 'lucide-react'
 import { Link } from 'react-router'
 import type { ITeam } from '../types'
@@ -20,13 +20,13 @@ export function TeamCard(team: ITeam) {
         <Link to={`/teams/${team.id}`}>
             <Card>
                 <TeamCardHeader {...team} />
-                <TeamCardFooter members={team.members} />
+                <TeamCardFooter users={team.users} />
             </Card>
         </Link>
     )
 }
 
-function TeamCardHeader({ members, name }: ITeam) {
+function TeamCardHeader({ users, name }: ITeam) {
     return (
         <CardHeader>
             <Avatar className="w-10 h-10 mb-4">
@@ -35,7 +35,7 @@ function TeamCardHeader({ members, name }: ITeam) {
                 </AvatarFallback>
             </Avatar>
             <CardTitle>{name}</CardTitle>
-            <CardDescription>{members.length} участников</CardDescription>
+            <CardDescription>{users.length} участников</CardDescription>
             <CardAction>
                 <ChevronRight size={18} className="text-muted-foreground" />
             </CardAction>
@@ -43,16 +43,16 @@ function TeamCardHeader({ members, name }: ITeam) {
     )
 }
 
-function TeamCardFooter({ members }: { members: ITeam['members'] }) {
+function TeamCardFooter({ users }: { users: ITeam['users'] }) {
     const sliceNum = 5
-    const visibleMembers = members.slice(0, sliceNum)
-    const remainingCount = members.length - sliceNum
+    const visibleMembers = users.slice(0, sliceNum)
+    const remainingCount = users.length - sliceNum
     return (
         <CardFooter className="flex items-center justify-between">
             <AvatarGroup>
                 {visibleMembers.map((member, index) => (
                     <Avatar key={index}>
-                        <AvatarImage src={member.avatar} />
+                        <AvatarImage src={member.photo_url} />
                         <AvatarFallback>
                             {member.first_name.at(0)}
                             {member.last_name?.at(0)}
@@ -64,7 +64,7 @@ function TeamCardFooter({ members }: { members: ITeam['members'] }) {
                 )}
             </AvatarGroup>
             <p className="text-base font-medium opacity-70">
-                {members.length === 1 ? 'Участник' : 'Участника'}
+                {users.length === 1 ? 'Участник' : 'Участника'}
             </p>
         </CardFooter>
     )

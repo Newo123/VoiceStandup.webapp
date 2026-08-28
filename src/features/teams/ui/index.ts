@@ -1,4 +1,4 @@
 export * from './TeamCard'
-export * from './TeamDetailMembers'
+export * from './TeamForm'
 export * from './TeamInviteLink'
 export * from './TeamList'
