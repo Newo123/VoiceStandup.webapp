@@ -1,4 +1,4 @@
 export * from './not-found'
-export * from './profile'
 export * from './teams'
+export * from './user'
 export * from './users'

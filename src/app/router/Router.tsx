@@ -1,10 +1,10 @@
 import {
     NotFoundPage,
-    ProfilePage,
     TeamDetailPage,
     TeamFormPage,
     TeamsPage,
     UserDetailPage,
+    UserProfilePage,
     UsersPage,
 } from '@/pages'
 import { RootLayout } from '@/shared'
@@ -24,12 +24,10 @@ export function Router() {
                     <Route path=":id" element={<TeamDetailPage />} />
                     <Route path=":id/edit" element={<TeamFormPage />} />
                 </Route>
-                <Route path="users">
-                    <Route index element={<UsersPage />} />
+                <Route path="user">
+                    <Route index element={<UserProfilePage />} />
+                    <Route path="list" element={<UsersPage />} />
                     <Route path=":id" element={<UserDetailPage />} />
-                </Route>
-                <Route path="profile">
-                    <Route index element={<ProfilePage />} />
                 </Route>
                 <Route path="*" element={<NotFoundPage />} />
 

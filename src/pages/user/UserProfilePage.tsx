@@ -1,5 +1,5 @@
 import { useHeader, useTelegram } from '@/app/providers'
-import { ProfileAchievements, ProfileStatistics } from '@/features/profile'
+import { UserAchievements, UserStatistics } from '@/features/user/ui'
 import {
     Avatar,
     AvatarFallback,
@@ -9,7 +9,7 @@ import {
 } from '@/shared'
 import { useEffect } from 'react'
 
-export function ProfilePage() {
+export function UserProfilePage() {
     const { setTitle } = useHeader()
     const { user } = useTelegram()
 
@@ -40,8 +40,8 @@ export function ProfilePage() {
             </div>
             <ProgressCard />
 
-            <ProfileStatistics />
-            <ProfileAchievements />
+            <UserStatistics />
+            <UserAchievements />
         </Container>
     )
 }
