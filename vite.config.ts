@@ -4,24 +4,31 @@ import fs from 'fs'
 import path from 'path'
 import { defineConfig } from 'vite'
 
-// https://vite.dev/config/
-export default defineConfig({
+export default defineConfig(({ command, isPreview }) => ({
     plugins: [react(), tailwindcss()],
+
     resolve: {
         alias: {
-            '@': path.resolve(import.meta.dirname, './src'), // <-- настройка псевдонима
+            '@': path.resolve(import.meta.dirname, './src'),
         },
     },
-    server: {
-        port: 8443,
-        host: '0.0.0.0',
-        hmr: {
-            host: 'tg-mini-app.local',
-            port: 8443,
-        },
-        https: {
-            key: fs.readFileSync('./.cert/localhost-key.pem'),
-            cert: fs.readFileSync('./.cert/localhost.pem'),
-        },
-    },
-})
+
+    ...(command === 'serve' && !isPreview
+        ? {
+              server: {
+                  port: 8443,
+                  host: '0.0.0.0',
+
+                  hmr: {
+                      host: 'tg-mini-app.local',
+                      port: 8443,
+                  },
+
+                  https: {
+                      key: fs.readFileSync('./.cert/localhost-key.pem'),
+                      cert: fs.readFileSync('./.cert/localhost.pem'),
+                  },
+              },
+          }
+        : {}),
+}))
