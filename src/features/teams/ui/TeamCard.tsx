@@ -26,7 +26,7 @@ export function TeamCard(team: ITeam) {
     )
 }
 
-function TeamCardHeader({ members, name, id }: ITeam) {
+function TeamCardHeader({ members, name }: ITeam) {
     return (
         <CardHeader>
             <Avatar className="w-10 h-10 mb-4">

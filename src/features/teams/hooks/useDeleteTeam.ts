@@ -22,13 +22,13 @@ export function useDeleteTeam() {
 
             return { previousTeams }
         },
-        onSuccess: (_, id) => {
+        onSuccess: (_, __ /* id*/) => {
             queryClient.invalidateQueries({
                 queryKey: teamKeys.list(),
                 refetchType: 'none',
             })
         },
-        onError: (error, id, context) => {
+        onError: (_, __ /* id */, context) => {
             if (context?.previousTeams) {
                 queryClient.setQueryData(teamKeys.list(), context.previousTeams)
             }

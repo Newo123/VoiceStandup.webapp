@@ -2,7 +2,7 @@ import { useTeams } from '../hooks'
 import { TeamCard } from './TeamCard'
 
 export function TeamList() {
-    const { data: teams, isLoading, error } = useTeams()
+    const { data: teams, isLoading } = useTeams()
 
     // if (isLoading) return <TeamListSkeleton />
     // Сделать отрисовку скелетона
