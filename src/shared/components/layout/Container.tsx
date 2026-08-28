@@ -7,8 +7,6 @@ interface IProps extends PropsWithChildren<unknown> {
 
 export function Container({ className, children }: IProps) {
     return (
-        <div className={cn('px-[16px] max-w-[720px] w-full', className)}>
-            {children}
-        </div>
+        <div className={cn('px-4 max-w-xl w-full', className)}>{children}</div>
     )
 }
