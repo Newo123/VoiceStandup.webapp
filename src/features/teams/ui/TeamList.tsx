@@ -3,8 +3,8 @@ import { TeamCard } from './TeamCard'
 
 export function TeamList() {
     const { data: teams, isLoading, error } = useTeams()
-    console.log(error)
 
+    // if (isLoading) return <TeamListSkeleton />
     // Сделать отрисовку скелетона
     if (isLoading) {
         return <div>Загрузка...</div>

@@ -13,39 +13,20 @@ import {
 } from '@/shared'
 import { ChevronRight, Users } from 'lucide-react'
 import { Link } from 'react-router'
+import type { ITeam } from '../types'
 
-interface IProps {
-    id: number
-    name: string
-    members: {
-        avatar: string
-        name: string
-        is_owner?: boolean
-    }[]
-}
-
-export function TeamCard({ id, members, name }: IProps) {
+export function TeamCard(team: ITeam) {
     return (
-        <Card>
-            <TeamCardHeader
-                id={id}
-                members_length={members.length}
-                name={name}
-            />
-            <TeamCardFooter members={members} />
-        </Card>
+        <Link to={`/teams/${team.id}`}>
+            <Card>
+                <TeamCardHeader {...team} />
+                <TeamCardFooter members={team.members} />
+            </Card>
+        </Link>
     )
 }
 
-function TeamCardHeader({
-    members_length,
-    name,
-    id,
-}: {
-    id: number
-    members_length: number
-    name: string
-}) {
+function TeamCardHeader({ members, name, id }: ITeam) {
     return (
         <CardHeader>
             <Avatar className="w-10 h-10 mb-4">
@@ -54,17 +35,15 @@ function TeamCardHeader({
                 </AvatarFallback>
             </Avatar>
             <CardTitle>{name}</CardTitle>
-            <CardDescription>{members_length} участников</CardDescription>
+            <CardDescription>{members.length} участников</CardDescription>
             <CardAction>
-                <Link to={`/teams/${id}`}>
-                    <ChevronRight />
-                </Link>
+                <ChevronRight size={18} className="text-muted-foreground" />
             </CardAction>
         </CardHeader>
     )
 }
 
-function TeamCardFooter({ members }: { members: IProps['members'] }) {
+function TeamCardFooter({ members }: { members: ITeam['members'] }) {
     const sliceNum = 5
     const visibleMembers = members.slice(0, sliceNum)
     const remainingCount = members.length - sliceNum
@@ -73,8 +52,11 @@ function TeamCardFooter({ members }: { members: IProps['members'] }) {
             <AvatarGroup>
                 {visibleMembers.map((member, index) => (
                     <Avatar key={index}>
-                        <AvatarImage src={member.avatar} alt={member.name} />
-                        <AvatarFallback>{member.name}</AvatarFallback>
+                        <AvatarImage src={member.avatar} />
+                        <AvatarFallback>
+                            {member.first_name.at(0)}
+                            {member.last_name?.at(0)}
+                        </AvatarFallback>
                     </Avatar>
                 ))}
                 {remainingCount > 0 && (

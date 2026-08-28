@@ -31,13 +31,13 @@ export function Router() {
                 <Route path="profile">
                     <Route index element={<ProfilePage />} />
                 </Route>
+                <Route path="*" element={<NotFoundPage />} />
 
                 {/* <Route path="/reports" element={<ReportsPage />} />
                 <Route path="/reports/:id" element={<ReportDetailPage />} /> */}
             </Route>
 
             {/* 404 */}
-            <Route path="*" element={<NotFoundPage />} />
         </Routes>
     )
 }
