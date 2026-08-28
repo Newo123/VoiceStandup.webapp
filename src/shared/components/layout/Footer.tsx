@@ -15,7 +15,7 @@ const NAV_ITEMS = [
         label: 'Отчеты',
     },
     {
-        to: '/profile',
+        to: '/user',
         icon: User,
         label: 'Профиль',
     },

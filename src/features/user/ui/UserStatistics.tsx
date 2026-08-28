@@ -6,7 +6,7 @@ import {
     ListWrapper,
 } from '@/shared'
 
-export function ProfileStatistics() {
+export function UserStatistics() {
     return (
         <ListWrapper title="Статистика">
             <div className="flex items-center gap-2">

@@ -7,7 +7,7 @@ import {
 } from '@/shared'
 import { Mic, Sparkles, Trophy, Zap } from 'lucide-react'
 
-export function ProfileAchievements() {
+export function UserAchievements() {
     return (
         <ListWrapper title="Достижения">
             <div className="flex flex-col gap-2">
