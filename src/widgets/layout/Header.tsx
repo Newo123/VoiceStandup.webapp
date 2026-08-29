@@ -9,7 +9,7 @@ import { Container } from './Container'
 
 export function Header() {
     const { title, showBackButton, goBack } = useHeader()
-    const { user, webApp } = useTelegram()
+    const { user } = useTelegram()
 
     const getInitials = () => {
         const first = user?.first_name?.[0] || ''
