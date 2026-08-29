@@ -26,7 +26,7 @@ export function Header() {
                 sticky top-0 z-50
                 border-b border-border
                 bg-header
-                pt-[var(--app-safe-top) - calc(var(--app-content-safe-top))]
+                 pt-[calc(var(--tg-content-safe-area-inset-top,20px)+50px)]
             "
         >
             <Container className="flex h-[56px] items-center justify-between">
