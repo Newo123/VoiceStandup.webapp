@@ -3,7 +3,6 @@ import { useHeader } from '@/app/providers/HeaderProvider'
 import { ChevronLeft, User } from 'lucide-react'
 import { Link } from 'react-router'
 
-import { cn } from '@/shared'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { Button } from '../ui/button'
 import { Container } from './Container'
@@ -11,8 +10,6 @@ import { Container } from './Container'
 export function Header() {
     const { title, showBackButton, goBack } = useHeader()
     const { user, webApp } = useTelegram()
-
-    const isTelegram = Boolean(webApp)
 
     const getInitials = () => {
         const first = user?.first_name?.[0] || ''
@@ -22,12 +19,7 @@ export function Header() {
     }
 
     return (
-        <header
-            className={cn(
-                'sticky top-0 z-50 border-b border-border bg-header',
-                isTelegram && 'pt-[calc(var(--tg-safe-area-inset-top,20px))]',
-            )}
-        >
+        <header className="sticky top-0 z-50 border-b border-border bg-header pt-[--tg-safe-area-inset-bottom,0px))]">
             <Container className="flex h-[56px] items-center justify-between">
                 <div className="flex min-w-0 flex-1 items-center gap-2">
                     {showBackButton && (
