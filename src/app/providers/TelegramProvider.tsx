@@ -79,6 +79,7 @@ export function TelegramProvider({ children }: PropsWithChildren<unknown>) {
             if (app) {
                 app.ready()
                 app.expand()
+                // Сделать проверку на fullscreen
                 app.requestFullscreen()
 
                 setWebApp(app)

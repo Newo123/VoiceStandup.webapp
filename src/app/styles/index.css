@@ -66,8 +66,17 @@
 }
 
 :root {
-    --safe-area-top: env(safe-area-inset-top, 0px);
-    --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+    --app-safe-top: max(
+        env(safe-area-inset-top),
+        var(--tg-content-safe-area-inset-top, 0px),
+        var(--tg-safe-area-inset-top, 0px)
+    );
+
+    --app-safe-bottom: max(
+        env(safe-area-inset-bottom),
+        var(--tg-content-safe-area-inset-bottom, 0px),
+        var(--tg-safe-area-inset-bottom, 0px)
+    );
     --background: var(--tg-theme-bg-color, #ffffff);
     --foreground: var(--tg-theme-text-color, oklch(0.145 0 0));
 
