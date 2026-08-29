@@ -9,20 +9,20 @@ import {
     DrawerHeader,
     DrawerTitle,
     DrawerTrigger,
-} from '@/shared'
-
+} from '@/widgets'
 import { Plus } from 'lucide-react'
 
 interface IProps {
     teamName: string
+    teamId: number
 }
 
-export function TeamInviteLink({ teamName }: IProps) {
+export function TeamInviteLink({ teamName, teamId }: IProps) {
     return (
         <Drawer>
             <DrawerTrigger
                 render={
-                    <Button className="mt-8">
+                    <Button>
                         <Plus />
                         Пригласить участника
                     </Button>
@@ -42,7 +42,9 @@ export function TeamInviteLink({ teamName }: IProps) {
                     </DrawerDescription>
                 </DrawerHeader>
                 <div className="flex-1 scroll-fade overflow-y-auto p-4">
-                    <CopyButton value="asdasd" />
+                    <CopyButton
+                        value={`https://t.me/teamflow_bot?start=invite_${teamId}`}
+                    />
                 </div>
                 <DrawerFooter>
                     <DrawerClose

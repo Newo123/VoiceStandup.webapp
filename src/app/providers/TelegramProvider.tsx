@@ -6,7 +6,7 @@ import {
     type PropsWithChildren,
 } from 'react'
 
-interface TelegramUser {
+export interface TelegramUser {
     id: number
     first_name: string
     last_name?: string
@@ -142,7 +142,6 @@ export function TelegramProvider({ children }: PropsWithChildren<unknown>) {
     )
 }
 
-// ====== Хук ======
 export function useTelegram() {
     const context = useContext(TelegramContext)
     if (!context) {
