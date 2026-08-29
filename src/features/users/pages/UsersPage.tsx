@@ -29,7 +29,7 @@ export function UsersPage() {
             <div className="flex flex-col gap-1">
                 <h1 className="text-2xl font-bold">Пользователи</h1>
                 <p className="text-xs opacity-70">
-                    Находите комануд. Работайте вместе.
+                    Находите команду. Работайте вместе.
                 </p>
             </div>
             <UsersList users={users} title="Пользователи" />
