@@ -36,6 +36,7 @@ export function Footer() {
                 sticky bottom-0 z-50
                 border-t border-border
                 bg-header
+                pb-[var(--app-safe-bottom)]
             "
         >
             <Container className="flex h-[52px] items-center justify-around">
@@ -54,10 +55,10 @@ export function Footer() {
                                     className={`
                                         flex flex-col
                                         items-center
-                                        justify-center
                                         gap-0
                                         text-xs
                                         transition-colors
+
                                         ${
                                             active
                                                 ? 'text-foreground'
@@ -66,9 +67,10 @@ export function Footer() {
                                     `}
                                 >
                                     <Icon
-                                        className={`h-4 w-4 ${
-                                            active ? 'text-primary' : ''
-                                        }`}
+                                        className={`
+                                            h-4 w-4
+                                            ${active ? 'text-primary' : ''}
+                                        `}
                                     />
 
                                     {label}

@@ -9,13 +9,8 @@ import { Container } from './Container'
 
 export function Header() {
     const { title, showBackButton, goBack } = useHeader()
-
     const { user, webApp } = useTelegram()
 
-    /**
-     * Если webApp существует —
-     * приложение запущено внутри Telegram.
-     */
     const isTelegram = Boolean(webApp)
 
     const getInitials = () => {
@@ -36,13 +31,6 @@ export function Header() {
         >
             <Container className="flex h-[56px] items-center justify-between">
                 <div className="flex min-w-0 flex-1 items-center gap-2">
-                    {/* 
-                        В браузере показываем свою кнопку.
-
-                        В Telegram НЕ показываем,
-                        потому что там используется
-                        нативный Telegram BackButton.
-                    */}
                     {showBackButton && !isTelegram && (
                         <Button
                             variant="ghost"
