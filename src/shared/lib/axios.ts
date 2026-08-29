@@ -1,14 +1,13 @@
 import axios from 'axios'
 
 export const api = axios.create({
-    baseURL: 'https://api.your-app.com',
+    baseURL: import.meta.env.VITE_API_URL,
     timeout: 30000,
     headers: {
         'Content-Type': 'application/json',
     },
 })
 
-// Добавляем initData в запросы
 api.interceptors.request.use(
     (config) => {
         const initData = window.Telegram?.WebApp?.initData

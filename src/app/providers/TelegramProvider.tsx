@@ -1,5 +1,6 @@
 import {
     createContext,
+    useCallback,
     useContext,
     useEffect,
     useState,
@@ -15,124 +16,176 @@ export interface TelegramUser {
     photo_url?: string
 }
 
-interface TelegramWebApp {
-    initData: string
-    initDataUnsafe: {
-        user?: TelegramUser
-        start_param?: string
-        auth_date: number
-        hash: string
-    }
-    colorScheme: 'light' | 'dark'
-    themeParams: Record<string, string>
-    ready: () => void
-    expand: () => void
-    close: () => void
-    sendData: (data: string) => void
-    showAlert: (message: string, callback?: () => void) => void
-    showConfirm: (message: string, callback?: (ok: boolean) => void) => void
-    showPopup: (params: any, callback?: (id: string) => void) => void
-    HapticFeedback: {
-        impactOccurred: (
-            style: 'light' | 'medium' | 'heavy' | 'rigid' | 'soft',
-        ) => void
-        notificationOccurred: (type: 'error' | 'success' | 'warning') => void
-    }
-    onEvent: (event: string, callback: () => void) => void
-    offEvent: (event: string, callback: () => void) => void
-    BackButton: {
-        show: () => void
-        hide: () => void
-        onClick: (callback: () => void) => void
-        offClick: (callback: () => void) => void
-    }
-}
-
 interface TelegramContextType {
-    webApp: TelegramWebApp | null
     user: TelegramUser | null
     initData: string
     startParam: string
     isReady: boolean
-    hapticImpact: (style: 'light' | 'medium' | 'heavy') => void
+    isFullscreen: boolean
+    isExpanded: boolean
+    platform: string
+    version: string
+    viewportHeight: number
+    requestFullscreen: () => Promise<void>
+    exitFullscreen: () => Promise<void>
+    // ====== HAPTIC ======
+    hapticImpact: (
+        style: 'light' | 'medium' | 'heavy' | 'rigid' | 'soft',
+    ) => void
     hapticNotification: (type: 'error' | 'success' | 'warning') => void
+    hapticSelection: () => void
+    // ====== UI ======
     showAlert: (message: string) => void
     showConfirm: (message: string) => Promise<boolean>
     sendData: (data: any) => void
     close: () => void
+    openLink: (url: string) => void
 }
 
 const TelegramContext = createContext<TelegramContextType | null>(null)
 
 export function TelegramProvider({ children }: PropsWithChildren<unknown>) {
-    const [webApp, setWebApp] = useState<TelegramWebApp | null>(null)
     const [user, setUser] = useState<TelegramUser | null>(null)
     const [initData, setInitData] = useState<string>('')
     const [startParam, setStartParam] = useState<string>('')
     const [isReady, setIsReady] = useState<boolean>(false)
+    const [isFullscreen, setIsFullscreen] = useState<boolean>(false)
+    const [isExpanded, setIsExpanded] = useState<boolean>(false)
+    const [platform, setPlatform] = useState<string>('')
+    const [version, setVersion] = useState<string>('')
+    const [viewportHeight, setViewportHeight] = useState<number>(0)
 
     useEffect(() => {
         const initTelegram = () => {
-            const app = (window as any).Telegram?.WebApp
+            const app = window.Telegram?.WebApp
+
             if (app) {
                 app.ready()
                 app.expand()
 
-                setWebApp(app)
+                setIsExpanded(true)
                 setUser(app.initDataUnsafe?.user || null)
                 setInitData(app.initData || '')
                 setStartParam(app.initDataUnsafe?.start_param || '')
+                setPlatform(app.platform || 'unknown')
+                setVersion(app.version || '')
+                setViewportHeight(app.viewportHeight || 0)
                 setIsReady(true)
+
+                // Полноэкранный режим
+                if (app.requestFullscreen) {
+                    app.requestFullscreen()
+                        .then(() => setIsFullscreen(true))
+                        .catch(() => console.warn('Fullscreen not supported'))
+                }
+
+                // События
+                app.onEvent('fullscreenChanged', (isFull: boolean) => {
+                    setIsFullscreen(isFull)
+                })
+
+                app.onEvent('viewportChanged', (data: { height: number }) => {
+                    setViewportHeight(data.height)
+                })
+
+                console.log('✅ Telegram Mini App initialized')
             } else {
-                // Если по какой-то причине скрипт еще не загрузился
                 console.warn('Telegram WebApp not available, retrying...')
                 setTimeout(initTelegram, 100)
             }
         }
 
-        // Запускаем инициализацию
         initTelegram()
     }, [])
 
-    // ====== Методы ======
-    const hapticImpact = (style: 'light' | 'medium' | 'heavy') => {
-        webApp?.HapticFeedback.impactOccurred(style)
-    }
+    // ====== HAPTIC METHODS ======
+    const hapticImpact = useCallback(
+        (style: 'light' | 'medium' | 'heavy' | 'rigid' | 'soft') => {
+            window.Telegram?.WebApp?.HapticFeedback?.impactOccurred(style)
+        },
+        [],
+    )
 
-    const hapticNotification = (type: 'error' | 'success' | 'warning') => {
-        webApp?.HapticFeedback.notificationOccurred(type)
-    }
+    const hapticNotification = useCallback(
+        (type: 'error' | 'success' | 'warning') => {
+            window.Telegram?.WebApp?.HapticFeedback?.notificationOccurred(type)
+        },
+        [],
+    )
 
-    const showAlert = (message: string) => {
-        webApp?.showAlert(message)
-    }
+    const hapticSelection = useCallback(() => {
+        window.Telegram?.WebApp?.HapticFeedback?.selectionChanged()
+    }, [])
 
-    const showConfirm = (message: string): Promise<boolean> => {
+    // ====== UI METHODS ======
+    const showAlert = useCallback((message: string) => {
+        window.Telegram?.WebApp?.showAlert(message)
+    }, [])
+
+    const showConfirm = useCallback((message: string): Promise<boolean> => {
         return new Promise((resolve) => {
-            webApp?.showConfirm(message, (ok) => resolve(ok))
+            window.Telegram?.WebApp?.showConfirm(message, (ok: boolean) =>
+                resolve(ok),
+            )
         })
-    }
+    }, [])
 
-    const sendData = (data: any) => {
-        webApp?.sendData(JSON.stringify(data))
-    }
+    const sendData = useCallback((data: any) => {
+        window.Telegram?.WebApp?.sendData(JSON.stringify(data))
+    }, [])
 
-    const close = () => {
-        webApp?.close()
-    }
+    const close = useCallback(() => {
+        window.Telegram?.WebApp?.close()
+    }, [])
+
+    const openLink = useCallback((url: string) => {
+        window.Telegram?.WebApp?.openLink(url)
+    }, [])
+
+    const requestFullscreen = useCallback(async () => {
+        try {
+            const app = window.Telegram?.WebApp
+            if (app?.requestFullscreen) {
+                await app.requestFullscreen()
+                setIsFullscreen(true)
+            }
+        } catch (error) {
+            console.error('Request fullscreen error:', error)
+        }
+    }, [])
+
+    const exitFullscreen = useCallback(async () => {
+        try {
+            const app = window.Telegram?.WebApp
+            if (app?.exitFullscreen) {
+                await app.exitFullscreen()
+                setIsFullscreen(false)
+            }
+        } catch (error) {
+            console.error('Exit fullscreen error:', error)
+        }
+    }, [])
 
     const value: TelegramContextType = {
-        webApp,
         user,
         initData,
         startParam,
         isReady,
+        isFullscreen,
+        isExpanded,
+        platform,
+        version,
+        viewportHeight,
+        requestFullscreen,
+        exitFullscreen,
         hapticImpact,
         hapticNotification,
+        hapticSelection,
         showAlert,
         showConfirm,
         sendData,
         close,
+        openLink,
     }
 
     return (
