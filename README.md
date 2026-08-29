@@ -14,8 +14,8 @@
   <a href="LICENSE">
     <img src="https://img.shields.io/badge/📄_Лицензия-MIT-green?style=for-the-badge" alt="MIT License">
   </a>
-  <a href="https://github.com/yourusername/voice-standup/stargazers">
-    <img src="https://img.shields.io/github/stars/yourusername/voice-standup?style=for-the-badge&logo=github" alt="GitHub stars">
+  <a href="https://github.com/Newo123/VoiceStandup.webapp/stargazers">
+    <img src="https://img.shields.io/github/stars/Newo123/VoiceStandup.webapp?style=for-the-badge&logo=github" alt="GitHub stars">
   </a>
 </p>
 
@@ -40,42 +40,204 @@
 
 ## 📱 Интерфейс
 
-<p align="center">
-  <em>⬇️ Скриншоты будут добавлены после завершения MVP ⬇️</em>
-</p>
+<div align="center">
 
-<!--
-  🖼️ ЗАМЕНИ МЕСТА ДЛЯ СКРИНШОТОВ НА РЕАЛЬНЫЕ КАРТИНКИ:
-  docs/screenshots/teams.png
-  docs/screenshots/team.png
-  docs/screenshots/reports.png
-  docs/screenshots/profile.png
-  docs/screenshots/invite.png
-  docs/screenshots/report-detail.png
--->
+<style>
+.phone-slider {
+  position: relative;
+  max-width: 320px;
+  margin: 0 auto;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  background: #000;
+}
 
-<table align="center">
-  <tr>
-    <td align="center"><b>Команды</b></td>
-    <td align="center"><b>Состав команды</b></td>
-    <td align="center"><b>Лента отчётов</b></td>
-  </tr>
-  <tr>
-    <td><img src="docs/screenshots/teams.png" width="250" alt="Команды"></td>
-    <td><img src="docs/screenshots/team.png" width="250" alt="Команда"></td>
-    <td><img src="docs/screenshots/reports.png" width="250" alt="Отчёты"></td>
-  </tr>
-  <tr>
-    <td align="center"><b>Профиль</b></td>
-    <td align="center"><b>Приглашение</b></td>
-    <td align="center"><b>Детали отчёта</b></td>
-  </tr>
-  <tr>
-    <td><img src="docs/screenshots/profile.png" width="250" alt="Профиль"></td>
-    <td><img src="docs/screenshots/invite.png" width="250" alt="Приглашение"></td>
-    <td><img src="docs/screenshots/report-detail.png" width="250" alt="Детали отчёта"></td>
-  </tr>
-</table>
+.phone-slider-wrapper {
+  display: flex;
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  width: 900%;
+}
+
+.phone-slide {
+  width: 11.11%;
+  flex-shrink: 0;
+}
+
+.phone-slide img {
+  width: 100%;
+  display: block;
+}
+
+.phone-slider-nav {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+  background: rgba(0,0,0,0.5);
+  padding: 6px 14px;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.phone-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.3);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.phone-dot:hover {
+  background: rgba(255,255,255,0.6);
+}
+
+.phone-input {
+  display: none;
+}
+
+.phone-input:nth-child(1):checked ~ .phone-slider-wrapper { transform: translateX(0%); }
+.phone-input:nth-child(2):checked ~ .phone-slider-wrapper { transform: translateX(-11.11%); }
+.phone-input:nth-child(3):checked ~ .phone-slider-wrapper { transform: translateX(-22.22%); }
+.phone-input:nth-child(4):checked ~ .phone-slider-wrapper { transform: translateX(-33.33%); }
+.phone-input:nth-child(5):checked ~ .phone-slider-wrapper { transform: translateX(-44.44%); }
+.phone-input:nth-child(6):checked ~ .phone-slider-wrapper { transform: translateX(-55.55%); }
+.phone-input:nth-child(7):checked ~ .phone-slider-wrapper { transform: translateX(-66.66%); }
+.phone-input:nth-child(8):checked ~ .phone-slider-wrapper { transform: translateX(-77.77%); }
+.phone-input:nth-child(9):checked ~ .phone-slider-wrapper { transform: translateX(-88.88%); }
+
+.phone-input:nth-child(1):checked ~ .phone-slider-nav label:nth-child(1) { background: #e94560; transform: scale(1.3); }
+.phone-input:nth-child(2):checked ~ .phone-slider-nav label:nth-child(2) { background: #e94560; transform: scale(1.3); }
+.phone-input:nth-child(3):checked ~ .phone-slider-nav label:nth-child(3) { background: #e94560; transform: scale(1.3); }
+.phone-input:nth-child(4):checked ~ .phone-slider-nav label:nth-child(4) { background: #e94560; transform: scale(1.3); }
+.phone-input:nth-child(5):checked ~ .phone-slider-nav label:nth-child(5) { background: #e94560; transform: scale(1.3); }
+.phone-input:nth-child(6):checked ~ .phone-slider-nav label:nth-child(6) { background: #e94560; transform: scale(1.3); }
+.phone-input:nth-child(7):checked ~ .phone-slider-nav label:nth-child(7) { background: #e94560; transform: scale(1.3); }
+.phone-input:nth-child(8):checked ~ .phone-slider-nav label:nth-child(8) { background: #e94560; transform: scale(1.3); }
+.phone-input:nth-child(9):checked ~ .phone-slider-nav label:nth-child(9) { background: #e94560; transform: scale(1.3); }
+
+.phone-label {
+  position: absolute;
+  bottom: 64px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  background: rgba(0,0,0,0.6);
+  padding: 4px 14px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 500;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.1);
+  z-index: 5;
+  white-space: nowrap;
+}
+
+.phone-counter {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  color: white;
+  background: rgba(0,0,0,0.5);
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  backdrop-filter: blur(10px);
+  z-index: 5;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+@media (max-width: 480px) {
+  .phone-label {
+    font-size: 10px;
+    padding: 3px 10px;
+    bottom: 58px;
+  }
+  .phone-slider-nav {
+    gap: 6px;
+    padding: 4px 10px;
+    bottom: 12px;
+  }
+  .phone-dot {
+    width: 6px;
+    height: 6px;
+  }
+}
+</style>
+
+<div class="phone-slider">
+  <input type="radio" name="phone" class="phone-input" checked>
+  <input type="radio" name="phone" class="phone-input">
+  <input type="radio" name="phone" class="phone-input">
+  <input type="radio" name="phone" class="phone-input">
+  <input type="radio" name="phone" class="phone-input">
+  <input type="radio" name="phone" class="phone-input">
+  <input type="radio" name="phone" class="phone-input">
+  <input type="radio" name="phone" class="phone-input">
+  <input type="radio" name="phone" class="phone-input">
+
+  <div class="phone-counter">1 / 9</div>
+
+  <div class="phone-slider-wrapper">
+    <div class="phone-slide">
+      <img src="./docs/screenshots/teams.jpg" alt="Мои команды">
+      <div class="phone-label">📋 Мои команды</div>
+    </div>
+    <div class="phone-slide">
+      <img src="./docs/screenshots/users.jpg" alt="Участники">
+      <div class="phone-label">👥 Участники</div>
+    </div>
+    <div class="phone-slide">
+      <img src="./docs/screenshots/team.jpg" alt="Состав команды">
+      <div class="phone-label">👤 Состав команды</div>
+    </div>
+    <div class="phone-slide">
+      <img src="./docs/screenshots/reports.jpg" alt="Лента отчётов">
+      <div class="phone-label">📊 Лента отчётов</div>
+    </div>
+    <div class="phone-slide">
+      <img src="./docs/screenshots/profile.jpg" alt="Профиль">
+      <div class="phone-label">👤 Профиль</div>
+    </div>
+    <div class="phone-slide">
+      <img src="./docs/screenshots/report-detail.jpg" alt="Детали отчёта">
+      <div class="phone-label">📄 Детали отчёта</div>
+    </div>
+    <div class="phone-slide">
+      <img src="./docs/screenshots/invite.jpg" alt="Приглашение">
+      <div class="phone-label">📨 Приглашение</div>
+    </div>
+    <div class="phone-slide">
+      <img src="./docs/screenshots/create-team.jpg" alt="Создание команды">
+      <div class="phone-label">✏️ Создание команды</div>
+    </div>
+    <div class="phone-slide">
+      <img src="./docs/screenshots/light-theme.jpg" alt="Светлая тема">
+      <div class="phone-label">🌙 Светлая тема</div>
+    </div>
+  </div>
+
+  <div class="phone-slider-nav">
+    <label class="phone-dot"></label>
+    <label class="phone-dot"></label>
+    <label class="phone-dot"></label>
+    <label class="phone-dot"></label>
+    <label class="phone-dot"></label>
+    <label class="phone-dot"></label>
+    <label class="phone-dot"></label>
+    <label class="phone-dot"></label>
+    <label class="phone-dot"></label>
+  </div>
+</div>
+
+<br>
+<em>💡 Кликай на точки, чтобы переключать экраны</em>
+
+</div>
 
 ---
 
