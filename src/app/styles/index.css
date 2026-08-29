@@ -66,6 +66,8 @@
 }
 
 :root {
+    --safe-area-top: env(safe-area-inset-top, 0px);
+    --safe-area-bottom: env(safe-area-inset-bottom, 0px);
     --background: var(--tg-theme-bg-color, #ffffff);
     --foreground: var(--tg-theme-text-color, oklch(0.145 0 0));
 
