@@ -46,6 +46,8 @@ interface TelegramWebApp {
         onClick: (callback: () => void) => void
         offClick: (callback: () => void) => void
     }
+    requestFullscreen: () => void
+    exitFullscreen: () => void
 }
 
 interface TelegramContextType {
@@ -77,6 +79,7 @@ export function TelegramProvider({ children }: PropsWithChildren<unknown>) {
             if (app) {
                 app.ready()
                 app.expand()
+                app.requestFullscreen()
 
                 setWebApp(app)
                 setUser(app.initDataUnsafe?.user || null)
