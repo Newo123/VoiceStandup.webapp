@@ -62,6 +62,9 @@ interface TelegramWebApp {
 
     offEvent: (event: string, callback: (...args: any[]) => void) => void
 
+    requestSafeArea?: () => void
+    requestContentSafeArea?: () => void
+
     BackButton: {
         show: () => void
         hide: () => void
@@ -146,6 +149,8 @@ export function TelegramProvider({ children }: PropsWithChildren) {
                 typeof app.requestFullscreen === 'function'
             ) {
                 try {
+                    app.requestSafeArea?.()
+                    app.requestContentSafeArea?.()
                     if (!app.isFullscreen) {
                         app.requestFullscreen()
                     }
