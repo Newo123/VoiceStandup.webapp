@@ -3,6 +3,7 @@ import { useHeader } from '@/app/providers/HeaderProvider'
 import { ChevronLeft, User } from 'lucide-react'
 import { Link } from 'react-router'
 
+import { cn } from '@/shared'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { Button } from '../ui/button'
 import { Container } from './Container'
@@ -22,12 +23,11 @@ export function Header() {
 
     return (
         <header
-            className="
-                sticky top-0 z-50
-                border-b border-border
-                bg-header
-                 pt-[calc(var(--tg-content-safe-area-inset-top,20px)+50px)]
-            "
+            className={cn(
+                'sticky top-0 z-50 border-b border-border bg-header',
+                isTelegram &&
+                    'pt-[calc(var(--tg-content-safe-area-inset-top,20px)+50px)]',
+            )}
         >
             <Container className="flex h-[56px] items-center justify-between">
                 <div className="flex min-w-0 flex-1 items-center gap-2">
