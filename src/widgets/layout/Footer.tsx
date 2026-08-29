@@ -31,14 +31,7 @@ export function Footer() {
     const location = useLocation()
 
     return (
-        <footer
-            className="
-                sticky bottom-0 z-50
-                border-t border-border
-                bg-header
-                 pb-[var(--app-safe-bottom)]
-            "
-        >
+        <footer className="sticky bottom-0 z-50 border-t border-border bg-header pb-[var(--tg-safe-area-inset-bottom,0px)]">
             <Container className="flex h-[52px] items-center justify-around">
                 {NAV_ITEMS.map(({ to, icon: Icon, label }) => {
                     const active = location.pathname.startsWith(to)

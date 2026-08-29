@@ -17,54 +17,32 @@ export interface TelegramUser {
 
 interface TelegramWebApp {
     initData: string
-
     initDataUnsafe: {
         user?: TelegramUser
         start_param?: string
         auth_date: number
         hash: string
     }
-
     colorScheme: 'light' | 'dark'
     themeParams: Record<string, string>
-
-    isFullscreen: boolean
     isExpanded: boolean
-
     ready: () => void
     expand: () => void
     close: () => void
-
     isVersionAtLeast: (version: string) => boolean
-
-    requestFullscreen: () => void
-    exitFullscreen: () => void
-
     disableVerticalSwipes: () => void
-
     HapticFeedback: {
         impactOccurred: (
             style: 'light' | 'medium' | 'heavy' | 'rigid' | 'soft',
         ) => void
-
         notificationOccurred: (type: 'error' | 'success' | 'warning') => void
     }
-
     showAlert: (message: string, callback?: () => void) => void
-
     showConfirm: (message: string, callback?: (ok: boolean) => void) => void
-
     showPopup: (params: any, callback?: (id: string) => void) => void
-
     sendData: (data: string) => void
-
     onEvent: (event: string, callback: (...args: any[]) => void) => void
-
     offEvent: (event: string, callback: (...args: any[]) => void) => void
-
-    requestSafeArea?: () => void
-    requestContentSafeArea?: () => void
-
     BackButton: {
         show: () => void
         hide: () => void
@@ -75,48 +53,26 @@ interface TelegramWebApp {
 
 interface TelegramContextType {
     webApp: TelegramWebApp | null
-
     user: TelegramUser | null
-
     initData: string
-
     startParam: string
-
     isReady: boolean
-
-    isFullscreen: boolean
-
     hapticImpact: (style: 'light' | 'medium' | 'heavy') => void
-
     hapticNotification: (type: 'error' | 'success' | 'warning') => void
-
     showAlert: (message: string) => void
-
     showConfirm: (message: string) => Promise<boolean>
-
     sendData: (data: any) => void
-
     close: () => void
-
-    requestFullscreen: () => void
-
-    exitFullscreen: () => void
 }
 
 const TelegramContext = createContext<TelegramContextType | null>(null)
 
 export function TelegramProvider({ children }: PropsWithChildren) {
     const [webApp, setWebApp] = useState<TelegramWebApp | null>(null)
-
     const [user, setUser] = useState<TelegramUser | null>(null)
-
     const [initData, setInitData] = useState('')
-
     const [startParam, setStartParam] = useState('')
-
     const [isReady, setIsReady] = useState(false)
-
-    const [isFullscreen, setIsFullscreen] = useState(false)
 
     useEffect(() => {
         let timeoutId: number | undefined
@@ -128,9 +84,7 @@ export function TelegramProvider({ children }: PropsWithChildren) {
 
             if (!app) {
                 console.warn('Telegram WebApp not available, retrying...')
-
                 timeoutId = window.setTimeout(initTelegram, 100)
-
                 return
             }
 
@@ -144,31 +98,10 @@ export function TelegramProvider({ children }: PropsWithChildren) {
                 app.disableVerticalSwipes()
             }
 
-            if (
-                app.isVersionAtLeast('8.0') &&
-                typeof app.requestFullscreen === 'function'
-            ) {
-                try {
-                    app.requestSafeArea?.()
-                    app.requestContentSafeArea?.()
-                    if (!app.isFullscreen) {
-                        app.requestFullscreen()
-                    }
-                } catch (error) {
-                    console.warn('Telegram fullscreen request failed:', error)
-                }
-            }
-
             setWebApp(app)
-
             setUser(app.initDataUnsafe?.user || null)
-
             setInitData(app.initData || '')
-
             setStartParam(app.initDataUnsafe?.start_param || '')
-
-            setIsFullscreen(Boolean(app.isFullscreen))
-
             setIsReady(true)
         }
 
@@ -180,56 +113,6 @@ export function TelegramProvider({ children }: PropsWithChildren) {
             }
         }
     }, [])
-
-    const requestFullscreen = () => {
-        if (!webApp) {
-            return
-        }
-
-        if (!webApp.isVersionAtLeast('8.0')) {
-            console.warn('Fullscreen requires Telegram Bot API 8.0+')
-
-            return
-        }
-
-        if (typeof webApp.requestFullscreen !== 'function') {
-            return
-        }
-
-        if (webApp.isFullscreen) {
-            return
-        }
-
-        try {
-            webApp.requestFullscreen()
-        } catch (error) {
-            console.warn('Failed to request fullscreen:', error)
-        }
-    }
-
-    const exitFullscreen = () => {
-        if (!webApp) {
-            return
-        }
-
-        if (!webApp.isVersionAtLeast('8.0')) {
-            return
-        }
-
-        if (typeof webApp.exitFullscreen !== 'function') {
-            return
-        }
-
-        if (!webApp.isFullscreen) {
-            return
-        }
-
-        try {
-            webApp.exitFullscreen()
-        } catch (error) {
-            console.warn('Failed to exit fullscreen:', error)
-        }
-    }
 
     const hapticImpact = (style: 'light' | 'medium' | 'heavy') => {
         webApp?.HapticFeedback.impactOccurred(style)
@@ -249,7 +132,6 @@ export function TelegramProvider({ children }: PropsWithChildren) {
                 resolve(false)
                 return
             }
-
             webApp.showConfirm(message, (ok) => resolve(ok))
         })
     }
@@ -268,15 +150,12 @@ export function TelegramProvider({ children }: PropsWithChildren) {
         initData,
         startParam,
         isReady,
-        isFullscreen,
         hapticImpact,
         hapticNotification,
         showAlert,
         showConfirm,
         sendData,
         close,
-        requestFullscreen,
-        exitFullscreen,
     }
 
     return (
@@ -288,10 +167,8 @@ export function TelegramProvider({ children }: PropsWithChildren) {
 
 export function useTelegram() {
     const context = useContext(TelegramContext)
-
     if (!context) {
         throw new Error('useTelegram must be used within TelegramProvider')
     }
-
     return context
 }

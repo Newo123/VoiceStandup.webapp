@@ -25,13 +25,12 @@ export function Header() {
         <header
             className={cn(
                 'sticky top-0 z-50 border-b border-border bg-header',
-                isTelegram &&
-                    'pt-[calc(var(--tg-content-safe-area-inset-top,20px)+50px)]',
+                isTelegram && 'pt-[calc(var(--tg-safe-area-inset-top,20px))]',
             )}
         >
             <Container className="flex h-[56px] items-center justify-between">
                 <div className="flex min-w-0 flex-1 items-center gap-2">
-                    {showBackButton && !isTelegram && (
+                    {showBackButton && (
                         <Button
                             variant="ghost"
                             size="icon"
