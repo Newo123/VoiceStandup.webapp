@@ -1,5 +1,7 @@
 import { createBrowserRouter, Navigate, Outlet } from 'react-router'
 
+import { ReportsPage } from '@/features/reports'
+import { ReportsDetailPage } from '@/features/reports/pages/ReportsDetailPage'
 import { TeamsDetailPage, TeamsFormPage, TeamsPage } from '@/features/teams'
 import { UsersPage, UsersProfilePage } from '@/features/users'
 import { NotFoundPage, RootLayout } from '@/widgets'
@@ -69,7 +71,19 @@ export const router = createBrowserRouter([
                             },
                         ],
                     },
-
+                    {
+                        path: 'reports',
+                        children: [
+                            {
+                                index: true,
+                                element: <ReportsPage />,
+                            },
+                            {
+                                path: ':id',
+                                element: <ReportsDetailPage />,
+                            },
+                        ],
+                    },
                     {
                         path: '*',
                         element: <NotFoundPage />,

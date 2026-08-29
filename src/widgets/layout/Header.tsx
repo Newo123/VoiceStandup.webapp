@@ -33,7 +33,7 @@ export function Header() {
                     )}
                     <h1 className="font-semibold truncate text-lg">{title}</h1>
                 </div>
-                <Link to="/user" className="shrink-0">
+                <Link to="/profile" className="shrink-0">
                     <Avatar className="w-10 h-10">
                         <AvatarImage src={user?.photo_url} />
                         <AvatarFallback>

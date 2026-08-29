@@ -1,12 +1,12 @@
-import { Badge } from './badge'
+import { Badge } from '../ui/badge'
 import {
     Card,
     CardDescription,
     CardFooter,
     CardHeader,
     CardTitle,
-} from './card'
-import { Progress } from './progress'
+} from '../ui/card'
+import { Progress } from '../ui/progress'
 
 export function ProgressCard() {
     const maxXP = 2000

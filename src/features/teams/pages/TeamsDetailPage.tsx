@@ -17,6 +17,7 @@ import { useEffect } from 'react'
 import { Link, useParams } from 'react-router'
 import { useTeam } from '../hooks'
 import { TeamInviteLink } from '../ui'
+import { TeamsDetailPageSkeleton } from './TeamsDetailPageSkeleton'
 
 export function TeamsDetailPage() {
     const { setTitle } = useHeader()
@@ -39,10 +40,8 @@ export function TeamsDetailPage() {
         return () => setTitle('')
     }, [team, isLoading, isError, setTitle])
 
-    // if (isLoading) return <TeamDetailSkeleton />
+    if (isLoading) return <TeamsDetailPageSkeleton />
     if (isError || !team) return <NotFoundPage />
-
-    console.log(team.users[0])
 
     return (
         <Container className="flex flex-col gap-8 flex-1 mb-5">

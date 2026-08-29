@@ -15,7 +15,7 @@ export function useMe() {
                   first_name: telegramUser.first_name,
                   last_name: telegramUser.last_name ?? '',
                   username: telegramUser.username ?? '',
-                  avatar: telegramUser.photo_url ?? '',
+                  photo_url: telegramUser.photo_url ?? '',
                   role: '',
               }
             : undefined,

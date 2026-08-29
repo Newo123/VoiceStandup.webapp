@@ -14,6 +14,7 @@ import { useEffect } from 'react'
 import { useParams } from 'react-router'
 import { useMe } from '../hooks'
 import { useUser } from '../hooks/useUser'
+import { UsersProfilePageSkeleton } from './UsersProfilePageSkeleton'
 
 export function UsersProfilePage() {
     const { setTitle } = useHeader()
@@ -45,18 +46,8 @@ export function UsersProfilePage() {
         }
     }, [setTitle, isLoading])
 
-    if (isLoading) {
-        return (
-            <Container className="flex flex-col flex-1 items-center justify-center">
-                <p>Загрузка...</p>
-            </Container>
-        )
-    }
-
-    // Обработка ошибки или отсутствия пользователя
-    if (isError || !user) {
-        return <NotFoundPage />
-    }
+    if (isLoading) return <UsersProfilePageSkeleton />
+    if (isError || !user) return <NotFoundPage />
 
     return (
         <Container className="flex flex-col flex-1 mb-5 gap-11">

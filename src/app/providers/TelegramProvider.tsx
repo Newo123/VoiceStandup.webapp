@@ -142,7 +142,6 @@ export function TelegramProvider({ children }: PropsWithChildren<unknown>) {
     )
 }
 
-// ====== Хук ======
 export function useTelegram() {
     const context = useContext(TelegramContext)
     if (!context) {

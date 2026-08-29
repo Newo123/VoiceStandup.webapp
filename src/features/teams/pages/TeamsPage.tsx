@@ -1,12 +1,13 @@
 import { useHeader } from '@/app/providers'
-import { TeamList } from '@/features/teams'
-import { Button, Container } from '@/widgets'
+import { TeamList, TeamsPageSkeleton, useTeams } from '@/features/teams'
+import { Button, Container, NotFoundPage } from '@/widgets'
 import { Plus } from 'lucide-react'
 import { useEffect } from 'react'
 import { Link } from 'react-router'
 
 export function TeamsPage() {
     const { setTitle } = useHeader()
+    const { data: teams, isLoading, isError } = useTeams()
 
     useEffect(() => {
         setTitle('Мои команды')
@@ -15,8 +16,15 @@ export function TeamsPage() {
             setTitle('')
         }
     }, [setTitle])
+
+    if (isLoading) {
+        return <TeamsPageSkeleton />
+    }
+
+    if (isError || !teams) return <NotFoundPage />
+
     return (
-        <Container className="flex flex-col flex-1">
+        <Container className="flex flex-col flex-1 gap-8">
             <div className="flex flex-col gap-1">
                 <h1 className="text-2xl font-bold">Мои команды</h1>
                 <p className="text-xs opacity-70">
@@ -25,7 +33,6 @@ export function TeamsPage() {
             </div>
 
             <Button
-                className="mt-8"
                 nativeButton={false}
                 render={(props) => <Link to="/teams/new" {...props} />}
             >
@@ -33,7 +40,7 @@ export function TeamsPage() {
                 Создать команду
             </Button>
 
-            <TeamList />
+            <TeamList teams={teams} />
         </Container>
     )
 }

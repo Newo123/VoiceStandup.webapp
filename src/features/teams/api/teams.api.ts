@@ -1,4 +1,4 @@
-import { delay, getAllTeamsWithUsers, getTeamWithUsers } from '@/shared'
+import { delay, teams } from '@/shared'
 import type { CreateTeamRequest, ITeam, PatchTeamRequest } from '../types'
 
 export class TeamsAPI {
@@ -7,20 +7,20 @@ export class TeamsAPI {
         // return data
         await delay(1000)
 
-        return Promise.resolve(getAllTeamsWithUsers())
+        return teams
     }
     static async GetTeam(id: number): Promise<ITeam | null> {
         // const { data } = await api.get(`/teams/${id}`)
         // return data
         await delay(1000)
 
-        return Promise.resolve(getTeamWithUsers(id) || null)
+        return teams.find((team) => team.id === id) || null
     }
     static async CreateTeam(_: CreateTeamRequest): Promise<ITeam> {
         // const { data } = await api.post('/teams', dto) // JSON
         // return data
         await delay(1000)
-        return Promise.resolve(getTeamWithUsers(1)!)
+        return teams.at(0)!
     }
     static async DeleteTeam(_: number): Promise<void> {
         // await api.delete(`/teams/${id}`)
@@ -31,6 +31,6 @@ export class TeamsAPI {
         // return data
         await delay(1000)
 
-        return Promise.resolve(getTeamWithUsers(id)!)
+        return teams.find((team) => team.id === id)!
     }
 }

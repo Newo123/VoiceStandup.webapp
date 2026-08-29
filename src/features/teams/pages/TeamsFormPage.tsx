@@ -1,6 +1,6 @@
 import { useHeader } from '@/app/providers'
-import { TeamForm, useTeam } from '@/features/teams'
-import { Container, NotFoundPage, Spinner } from '@/widgets'
+import { TeamForm, TeamsFormPageSkeleton, useTeam } from '@/features/teams'
+import { Container, NotFoundPage } from '@/widgets'
 import { useEffect } from 'react'
 import { useParams } from 'react-router'
 
@@ -30,19 +30,8 @@ export function TeamsFormPage() {
         return () => setTitle('')
     }, [setTitle, titleText])
 
-    // if (isLoading) return <TeamFormSkeleton />
-    if (isEditing && isLoading) {
-        return (
-            <Container className="flex flex-col flex-1 items-center justify-center">
-                <Spinner />
-            </Container>
-        )
-    }
-
-    // Если редактирование и произошла ошибка или данных нет – 404
-    if (isEditing && (isError || !team)) {
-        return <NotFoundPage />
-    }
+    if (isEditing && isLoading) return <TeamsFormPageSkeleton />
+    if (isEditing && (isError || !team)) return <NotFoundPage />
 
     return (
         <Container className="flex flex-col flex-1 mb-5">
