@@ -28,13 +28,11 @@ interface TelegramContextType {
     viewportHeight: number
     requestFullscreen: () => Promise<void>
     exitFullscreen: () => Promise<void>
-    // ====== HAPTIC ======
     hapticImpact: (
         style: 'light' | 'medium' | 'heavy' | 'rigid' | 'soft',
     ) => void
     hapticNotification: (type: 'error' | 'success' | 'warning') => void
     hapticSelection: () => void
-    // ====== UI ======
     showAlert: (message: string) => void
     showConfirm: (message: string) => Promise<boolean>
     sendData: (data: any) => void
@@ -55,11 +53,38 @@ export function TelegramProvider({ children }: PropsWithChildren<unknown>) {
     const [version, setVersion] = useState<string>('')
     const [viewportHeight, setViewportHeight] = useState<number>(0)
 
+    // 🔥 Функция для применения темы Telegram
+    const applyTelegramTheme = (app: Window['Telegram']['WebApp']) => {
+        if (!app) return
+
+        const root = document.documentElement
+
+        // Применяем все цвета из темы Telegram
+        const theme = app.themeParams
+        if (theme) {
+            Object.entries(theme).forEach(([key, value]) => {
+                // Преобразуем key из camelCase в kebab-case
+                const cssKey = key.replace(/([A-Z])/g, '-$1').toLowerCase()
+                root.style.setProperty(`--tg-theme-${cssKey}`, value)
+            })
+        }
+
+        // Применяем цветовую схему
+        if (app.colorScheme === 'dark') {
+            root.classList.add('dark')
+        } else {
+            root.classList.remove('dark')
+        }
+    }
+
     useEffect(() => {
         const initTelegram = () => {
             const app = window.Telegram?.WebApp
 
             if (app) {
+                // 🔥 Применяем тему Telegram
+                applyTelegramTheme(app)
+
                 app.ready()
                 app.expand()
 
@@ -80,6 +105,11 @@ export function TelegramProvider({ children }: PropsWithChildren<unknown>) {
                 }
 
                 // События
+                app.onEvent('themeChanged', () => {
+                    // 🔥 Обновляем тему при изменении
+                    applyTelegramTheme(app)
+                })
+
                 app.onEvent('fullscreenChanged', (isFull: boolean) => {
                     setIsFullscreen(isFull)
                 })
@@ -88,7 +118,10 @@ export function TelegramProvider({ children }: PropsWithChildren<unknown>) {
                     setViewportHeight(data.height)
                 })
 
-                console.log('✅ Telegram Mini App initialized')
+                console.log('✅ Telegram Mini App initialized', {
+                    theme: app.themeParams,
+                    colorScheme: app.colorScheme,
+                })
             } else {
                 console.warn('Telegram WebApp not available, retrying...')
                 setTimeout(initTelegram, 100)
