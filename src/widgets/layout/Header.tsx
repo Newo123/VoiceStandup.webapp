@@ -9,8 +9,8 @@ import { Container } from './Container'
 
 export function Header() {
     const { title, showBackButton, goBack } = useHeader()
-    const { user } = useTelegram()
-
+    const { user, webApp } = useTelegram()
+    const isTelegram = Boolean(webApp)
     const getInitials = () => {
         const first = user?.first_name?.[0] || ''
         const last = user?.last_name?.[0] || ''
@@ -22,7 +22,7 @@ export function Header() {
         <header className="sticky top-0 z-50 border-b border-border bg-header pt-[--tg-safe-area-inset-bottom,0px))]">
             <Container className="flex h-[56px] items-center justify-between">
                 <div className="flex min-w-0 flex-1 items-center gap-2">
-                    {showBackButton && (
+                    {showBackButton && !isTelegram && (
                         <Button
                             variant="ghost"
                             size="icon"
