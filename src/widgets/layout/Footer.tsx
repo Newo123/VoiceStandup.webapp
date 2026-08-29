@@ -36,7 +36,6 @@ export function Footer() {
                 sticky bottom-0 z-50
                 border-t border-border
                 bg-header
-                pb-[var(--app-safe-bottom)]
             "
         >
             <Container className="flex h-[52px] items-center justify-around">
