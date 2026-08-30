@@ -3,7 +3,7 @@ import { UsersAPI } from '../api/users.api'
 import type { IUser } from '../types'
 import { userKeys } from './keys'
 
-export function useUser(id: number) {
+export function useUser(id: string) {
     const queryClient = useQueryClient()
 
     return useQuery({

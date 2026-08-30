@@ -11,7 +11,8 @@ export function useMe() {
         queryFn: UsersAPI.GetMe,
         initialData: telegramUser
             ? {
-                  id: telegramUser.id,
+                  id: '',
+                  telegram_user_id: telegramUser.id,
                   first_name: telegramUser.first_name,
                   last_name: telegramUser.last_name ?? '',
                   username: telegramUser.username ?? '',

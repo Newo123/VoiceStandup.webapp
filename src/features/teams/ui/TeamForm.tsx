@@ -44,7 +44,7 @@ export function TeamForm({ initialTeam }: TeamFormProps) {
             try {
                 if (isEditing) {
                     await updateTeam.mutateAsync({
-                        id: initialTeam.telegram_chat_id!,
+                        id: initialTeam.id!,
                         ...value,
                     })
                     navigate(`/teams/${initialTeam.id}`)

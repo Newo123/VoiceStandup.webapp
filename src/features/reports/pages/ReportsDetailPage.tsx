@@ -12,19 +12,24 @@ import {
 import { ChevronDown, Sparkles } from 'lucide-react'
 import { useEffect } from 'react'
 import { useParams } from 'react-router'
+import z from 'zod'
 import { useReport } from '../hooks/useReport'
 import { ReportsDetailCard } from '../ui/ReportsDetailList'
 import { ReportsDetailPageSkeleton } from './ReportsDetailPageSkeleton'
 
+const reportIdSchema = z.string().uuid({ version: 'v4' })
+
 export function ReportsDetailPage() {
     const { setTitle } = useHeader()
     const { id } = useParams<{ id: string }>()
-    const reportId = id ? Number(id) : undefined
-    const isValidId = reportId !== undefined && !isNaN(reportId) && reportId > 0
 
-    if (!isValidId) {
+    const parsedId = reportIdSchema.safeParse(id)
+
+    if (!parsedId.success) {
         return <NotFoundPage />
     }
+
+    const reportId = parsedId.data
 
     const { data: report, isLoading, isError } = useReport(reportId)
 
@@ -48,9 +53,12 @@ export function ReportsDetailPage() {
                         Результат подготовленны через AI
                     </p>
                 </div>
+
                 <h1 className="text-2xl font-bold">Отчет</h1>
             </div>
+
             <ReportsDetailCard report={report} />
+
             <Card>
                 <CardContent>
                     <Collapsible>

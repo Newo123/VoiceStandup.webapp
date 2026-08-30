@@ -14,7 +14,7 @@ import { Plus } from 'lucide-react'
 
 interface IProps {
     teamName: string
-    teamId: number
+    teamId: string
 }
 
 export function TeamInviteLink({ teamName, teamId }: IProps) {

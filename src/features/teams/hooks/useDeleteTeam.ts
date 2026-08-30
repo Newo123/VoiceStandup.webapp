@@ -7,7 +7,7 @@ export function useDeleteTeam() {
     const queryClient = useQueryClient()
     return useMutation({
         mutationFn: TeamsAPI.DeleteTeam,
-        onMutate: async (id: number) => {
+        onMutate: async (id: string) => {
             await queryClient.cancelQueries({ queryKey: teamKeys.list() })
 
             const previousTeams = queryClient.getQueryData<ITeam[]>(

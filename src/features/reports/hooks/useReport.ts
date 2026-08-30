@@ -8,7 +8,7 @@ import type { IReport } from '../types'
 import { reportKeys } from './keys'
 
 export function useReport(
-    id: number,
+    id: string,
     options?: Omit<
         UseQueryOptions<IReport, Error, IReport, readonly unknown[]>,
         'queryKey' | 'queryFn'

@@ -7,7 +7,7 @@ import { ListWrapper } from '../ui/list-wrapper'
 
 interface IProps {
     users: IUser[]
-    owner_id?: number
+    owner_id?: string
     title: string
 }
 

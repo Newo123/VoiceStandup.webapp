@@ -15,21 +15,22 @@ import {
 import { Edit, Users } from 'lucide-react'
 import { useEffect } from 'react'
 import { Link, useParams } from 'react-router'
+import z from 'zod'
 import { useTeam } from '../hooks'
 import { TeamInviteLink } from '../ui'
 import { TeamsDetailPageSkeleton } from './TeamsDetailPageSkeleton'
 
 export function TeamsDetailPage() {
     const { setTitle } = useHeader()
-    const { id } = useParams()
-    const teamId = Number(id)
-    const isValidId = !isNaN(teamId) && teamId > 0
+    const { id } = useParams<{ id: string }>()
 
-    if (!isValidId) {
+    const isValidId = z.string().uuid({ version: 'v4' }).safeParse(id)
+
+    if (!isValidId.success) {
         return <NotFoundPage />
     }
 
-    const { data: team, isLoading, isError } = useTeam(teamId)
+    const { data: team, isLoading, isError } = useTeam(isValidId.data)
 
     useEffect(() => {
         if (isLoading) {
@@ -37,6 +38,7 @@ export function TeamsDetailPage() {
         } else if (team) {
             setTitle(team.name)
         }
+
         return () => setTitle('')
     }, [team, isLoading, isError, setTitle])
 
@@ -53,10 +55,12 @@ export function TeamsDetailPage() {
                                 <Users size={18} />
                             </AvatarFallback>
                         </Avatar>
+
                         <div>
-                            <CardTitle>{team?.name}</CardTitle>
+                            <CardTitle>{team.name}</CardTitle>
+
                             <CardDescription className="text-xs">
-                                {team?.users.length} участников ·{' Owner: '}
+                                {team.users.length} участников ·{' Owner: '}
                                 {
                                     team.users.find(
                                         (user) => user.id === team.owner_id,
@@ -65,6 +69,7 @@ export function TeamsDetailPage() {
                             </CardDescription>
                         </div>
                     </div>
+
                     <CardAction>
                         <Button
                             size="icon"
@@ -82,7 +87,9 @@ export function TeamsDetailPage() {
                     </CardAction>
                 </CardHeader>
             </Card>
+
             <TeamInviteLink teamName={team.name} teamId={team.id} />
+
             <UsersList
                 users={team.users}
                 owner_id={team.owner_id}

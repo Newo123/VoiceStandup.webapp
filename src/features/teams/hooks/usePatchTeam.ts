@@ -7,7 +7,7 @@ export function usePatchTeam() {
     const queryClient = useQueryClient()
 
     return useMutation({
-        mutationFn: ({ id, ...dto }: { id: number } & PatchTeamRequest) =>
+        mutationFn: ({ id, ...dto }: { id: string } & PatchTeamRequest) =>
             TeamsAPI.PatchTeam(id, dto),
         onSuccess: (updatedTeam) => {
             queryClient.setQueryData<ITeam[]>(teamKeys.list(), (old) => {

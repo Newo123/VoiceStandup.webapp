@@ -8,7 +8,7 @@ import type { ITeam } from '../types'
 import { teamKeys } from './keys'
 
 export function useTeam(
-    id: number,
+    id: string,
     options?: Omit<
         UseQueryOptions<ITeam, Error, ITeam, readonly unknown[]>,
         'queryKey' | 'queryFn'
