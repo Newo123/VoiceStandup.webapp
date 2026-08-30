@@ -1,63 +1,180 @@
-// import { users } from './users'
+import type { ITeam } from '@/features/teams'
+import { users } from './users'
 
-// const getUsers = (ids: number[]) =>
-//     ids
-//         .map((id) => users.find((user) => user.id === id))
-//         .filter((user): user is (typeof users)[number] => Boolean(user))
+const getUsers = (ids: string[]) =>
+    ids
+        .map((id) => users.find((user) => user.id === id))
+        .filter((user): user is (typeof users)[number] => Boolean(user))
 
-// export const teams = [
-//     {
-//         id: 1,
-//         name: 'Frontend Team',
-//         owner_id: 1,
-//         users: getUsers([
-//             1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 20, 23, 31, 35,
-//         ]),
-//     },
-//     {
-//         id: 2,
-//         name: 'Backend Team',
-//         owner_id: 15,
-//         users: getUsers([
-//             15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 40,
-//             44,
-//         ]),
-//     },
-//     {
-//         id: 3,
-//         name: 'QA Team',
-//         owner_id: 31,
-//         users: getUsers([
-//             31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 52,
-//             58,
-//         ]),
-//     },
-//     {
-//         id: 4,
-//         name: 'Product Team',
-//         owner_id: 51,
-//         users: getUsers([
-//             51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 70,
-//             74,
-//         ]),
-//     },
-//     {
-//         id: 5,
-//         name: 'Design Team',
-//         owner_id: 71,
-//         users: getUsers([
-//             71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 90,
-//             94,
-//         ]),
-//     },
-//     {
-//         id: 6,
-//         name: 'DevOps Team',
-//         owner_id: 91,
-//         users: getUsers([
-//             91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 12, 22, 32, 42, 62, 82,
-//         ]),
-//     },
-// ]
+const teamIds = [
+    '20000000-0000-4000-8000-000000000001',
+    '20000000-0000-4000-8000-000000000002',
+    '20000000-0000-4000-8000-000000000003',
+    '20000000-0000-4000-8000-000000000004',
+    '20000000-0000-4000-8000-000000000005',
+    '20000000-0000-4000-8000-000000000006',
+]
 
-// export const getTeamById = (id: number) => teams.find((team) => team.id === id)
+export const teams: ITeam[] = [
+    {
+        id: teamIds[0],
+        telegram_chat_id: 1,
+        name: 'Frontend Team',
+        owner_id: users[0].id,
+        users: getUsers([
+            users[0].id,
+            users[1].id,
+            users[2].id,
+            users[3].id,
+            users[4].id,
+            users[5].id,
+            users[6].id,
+            users[7].id,
+            users[8].id,
+            users[9].id,
+            users[10].id,
+            users[11].id,
+            users[12].id,
+            users[13].id,
+            users[19].id,
+            users[22].id,
+            users[30].id,
+            users[34].id,
+        ]),
+    },
+
+    {
+        id: teamIds[1],
+        telegram_chat_id: 2,
+        name: 'Backend Team',
+        owner_id: users[14].id,
+        users: getUsers([
+            users[14].id,
+            users[15].id,
+            users[16].id,
+            users[17].id,
+            users[18].id,
+            users[19].id,
+            users[20].id,
+            users[21].id,
+            users[22].id,
+            users[23].id,
+            users[24].id,
+            users[25].id,
+            users[26].id,
+            users[27].id,
+            users[28].id,
+            users[29].id,
+            users[39].id,
+            users[43].id,
+        ]),
+    },
+
+    {
+        id: teamIds[2],
+        telegram_chat_id: 3,
+        name: 'QA Team',
+        owner_id: users[30].id,
+        users: getUsers([
+            users[30].id,
+            users[31].id,
+            users[32].id,
+            users[33].id,
+            users[34].id,
+            users[35].id,
+            users[36].id,
+            users[37].id,
+            users[38].id,
+            users[39].id,
+            users[40].id,
+            users[41].id,
+            users[42].id,
+            users[43].id,
+            users[44].id,
+            users[45].id,
+            users[51].id,
+            users[57].id,
+        ]),
+    },
+
+    {
+        id: teamIds[3],
+        telegram_chat_id: 4,
+        name: 'Product Team',
+        owner_id: users[50].id,
+        users: getUsers([
+            users[50].id,
+            users[51].id,
+            users[52].id,
+            users[53].id,
+            users[54].id,
+            users[55].id,
+            users[56].id,
+            users[57].id,
+            users[58].id,
+            users[59].id,
+            users[60].id,
+            users[61].id,
+            users[62].id,
+            users[63].id,
+            users[64].id,
+            users[65].id,
+            users[69].id,
+            users[73].id,
+        ]),
+    },
+
+    {
+        id: teamIds[4],
+        telegram_chat_id: 5,
+        name: 'Design Team',
+        owner_id: users[70].id,
+        users: getUsers([
+            users[70].id,
+            users[71].id,
+            users[72].id,
+            users[73].id,
+            users[74].id,
+            users[75].id,
+            users[76].id,
+            users[77].id,
+            users[78].id,
+            users[79].id,
+            users[80].id,
+            users[81].id,
+            users[82].id,
+            users[83].id,
+            users[84].id,
+            users[85].id,
+            users[89].id,
+            users[93].id,
+        ]),
+    },
+
+    {
+        id: teamIds[5],
+        telegram_chat_id: 6,
+        name: 'DevOps Team',
+        owner_id: users[90].id,
+        users: getUsers([
+            users[90].id,
+            users[91].id,
+            users[92].id,
+            users[93].id,
+            users[94].id,
+            users[95].id,
+            users[96].id,
+            users[97].id,
+            users[98].id,
+            users[99].id,
+            users[11].id,
+            users[21].id,
+            users[31].id,
+            users[41].id,
+            users[61].id,
+            users[81].id,
+        ]),
+    },
+]
+
+export const getTeamById = (id: string) => teams.find((team) => team.id === id)

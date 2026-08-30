@@ -1,4 +1,4 @@
-import { useHeader } from '@/app/providers'
+import { useHeader, useTelegram } from '@/app/providers'
 import { TeamList, TeamsPageSkeleton, useTeams } from '@/features/teams'
 import { Button, Container, NotFoundPage } from '@/widgets'
 import { Plus } from 'lucide-react'
@@ -8,6 +8,8 @@ import { Link } from 'react-router'
 export function TeamsPage() {
     const { setTitle } = useHeader()
     const { data: teams, isLoading, isError } = useTeams()
+    const { initData } = useTelegram()
+    console.log(initData)
 
     useEffect(() => {
         setTitle('Мои команды')
