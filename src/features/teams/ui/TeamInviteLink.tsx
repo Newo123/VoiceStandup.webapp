@@ -48,7 +48,7 @@ export function TeamInviteLink({ teamName, teamId }: IProps) {
                 </div>
                 <DrawerFooter>
                     <DrawerClose
-                        render={<Button variant="secondary">Cancel</Button>}
+                        render={<Button variant="secondary">Закрыть</Button>}
                     />
                 </DrawerFooter>
             </DrawerContent>
