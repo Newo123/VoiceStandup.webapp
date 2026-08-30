@@ -43,7 +43,7 @@ export function TeamInviteLink({ teamName, teamId }: IProps) {
                 </DrawerHeader>
                 <div className="flex-1 scroll-fade overflow-y-auto p-4">
                     <CopyButton
-                        value={`https://t.me/teamflow_bot?start=invite_${teamId}`}
+                        value={`https://t.me/${import.meta.env.VITE_BOT_USERNAME}?start=invite_${teamId}`}
                     />
                 </div>
                 <DrawerFooter>
