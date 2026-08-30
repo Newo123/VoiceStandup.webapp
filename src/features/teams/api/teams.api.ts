@@ -1,13 +1,13 @@
-import { api, delay, teams } from '@/shared'
+import { delay, teams } from '@/shared'
 import type { CreateTeamRequest, ITeam, PatchTeamRequest } from '../types'
 
 export class TeamsAPI {
     static async GetTeams(): Promise<ITeam[]> {
-        // await delay(1000)
-        // return teams
-
-        const { data: teams } = await api.get('/teams')
+        await delay(1000)
         return teams
+
+        // const { data: teams } = await api.get('/teams')
+        // return teams
     }
     static async GetTeam(id: string): Promise<ITeam | null> {
         await delay(1000)
