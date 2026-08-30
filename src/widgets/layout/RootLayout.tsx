@@ -6,11 +6,9 @@ export function RootLayout() {
     return (
         <div className="min-h-screen bg-background flex flex-col max-w-xl mx-auto">
             <Header />
-
             <main className="flex-1 py-6 flex flex-col min-h-0">
                 <Outlet />
             </main>
-
             <Footer />
 
             <ScrollRestoration

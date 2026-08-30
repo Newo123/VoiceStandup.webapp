@@ -84,7 +84,8 @@ export const users = Array.from({ length: 100 }, (_, index) => {
     const lastName = lastNames[(index * 7) % lastNames.length]
 
     return {
-        id,
+        id: id.toString(),
+        telegram_user_id: id,
         photo_url: `https://api.dicebear.com/9.x/avataaars/svg?seed=user-${id}`,
         first_name: firstName,
         last_name: lastName,
@@ -93,4 +94,4 @@ export const users = Array.from({ length: 100 }, (_, index) => {
     }
 })
 
-export const getUserById = (id: number) => users.find((user) => user.id === id)
+export const getUserById = (id: string) => users.find((user) => user.id === id)

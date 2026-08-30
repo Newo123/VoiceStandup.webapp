@@ -1,10 +1,12 @@
 import type { IUser } from '@/features/users'
 
 export interface ITeam {
-    id: number
+    id: string
     name: string
     users: IUser[]
-    owner_id: number
+    owner_id: string
+
+    telegram_chat_id: number
 }
 
 export type CreateTeamRequest = {

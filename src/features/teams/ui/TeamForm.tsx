@@ -15,9 +15,7 @@ import { usePatchTeam } from '../hooks/usePatchTeam'
 import type { ITeam } from '../types'
 
 const formSchema = z.object({
-    group_id: z
-        .number({ message: 'Поле должно быть числом' })
-        .min(1, 'ID группы должен быть больше 0'),
+    group_id: z.number({ message: 'Поле должно быть числом' }),
     name: z
         .string()
         .min(3, 'Минимальное количество символов 3')
@@ -25,19 +23,18 @@ const formSchema = z.object({
 })
 
 type TeamFormProps = {
-    teamId?: number
     initialTeam?: ITeam
 }
 
-export function TeamForm({ teamId, initialTeam }: TeamFormProps) {
+export function TeamForm({ initialTeam }: TeamFormProps) {
     const navigate = useNavigate()
     const createTeam = useCreateTeam()
     const updateTeam = usePatchTeam()
-    const isEditing = !!teamId && !!initialTeam
+    const isEditing = !!initialTeam
 
     const form = useForm({
         defaultValues: {
-            group_id: initialTeam?.id || 0,
+            group_id: initialTeam?.telegram_chat_id || 0,
             name: initialTeam?.name || '',
         },
         validators: {
@@ -46,8 +43,11 @@ export function TeamForm({ teamId, initialTeam }: TeamFormProps) {
         onSubmit: async ({ value }) => {
             try {
                 if (isEditing) {
-                    await updateTeam.mutateAsync({ id: teamId!, ...value })
-                    navigate(`/teams/${teamId}`)
+                    await updateTeam.mutateAsync({
+                        id: initialTeam.telegram_chat_id!,
+                        ...value,
+                    })
+                    navigate(`/teams/${initialTeam.id}`)
                 } else {
                     await createTeam.mutateAsync(value)
                     navigate('/teams')

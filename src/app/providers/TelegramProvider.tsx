@@ -49,6 +49,10 @@ interface TelegramWebApp {
         onClick: (callback: () => void) => void
         offClick: (callback: () => void) => void
     }
+
+    openTelegramLink: (url: string) => void
+    openLink: (url: string) => void
+    switchInlineQuery: (query: string, chatTypes?: string[]) => void
 }
 
 interface TelegramContextType {

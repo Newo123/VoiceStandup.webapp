@@ -2,7 +2,7 @@ import type { ITeam } from '@/features/teams'
 import type { IUser } from '@/features/users'
 
 export interface IReport {
-    id: number
+    id: string
     user: IUser
     team: ITeam
     created_at: string
