@@ -42,7 +42,6 @@ export const teams: ITeam[] = [
             users[34].id,
         ]),
     },
-
     {
         id: teamIds[1],
         telegram_chat_id: 2,
@@ -69,7 +68,6 @@ export const teams: ITeam[] = [
             users[43].id,
         ]),
     },
-
     {
         id: teamIds[2],
         telegram_chat_id: 3,
@@ -96,7 +94,6 @@ export const teams: ITeam[] = [
             users[57].id,
         ]),
     },
-
     {
         id: teamIds[3],
         telegram_chat_id: 4,
@@ -123,7 +120,6 @@ export const teams: ITeam[] = [
             users[73].id,
         ]),
     },
-
     {
         id: teamIds[4],
         telegram_chat_id: 5,
